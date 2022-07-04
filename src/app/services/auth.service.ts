@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import * as authActions from '../auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { unSetItems } from '../ingreso-egreso/ingreso-egreso.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class AuthService {
 
   userSubscription !: Subscription;
+  private _user!: Usuario | null;
 
   constructor(public auth: AngularFireAuth
               , private firestore: AngularFirestore
@@ -46,12 +48,15 @@ export class AuthService {
         this.userSubscription = this.firestore.doc(`${fuser.uid}/usuario`).valueChanges()
               .subscribe(fireStoreUser =>{
                 const user = Usuario.fromFirebase(fireStoreUser);
+                this._user = user;
                 this.store.dispatch(authActions.setUser({user}));
               })
       }
       else{
+        this._user= null;
         this.userSubscription.unsubscribe();  // cancela subscripcion para no escuchar cuando sesion este cerrada
         this.store.dispatch(authActions.unSetUser());
+        this.store.dispatch(unSetItems());
       }
       
     })
@@ -62,4 +67,9 @@ export class AuthService {
       map( fuser => fuser != null)
     )
   }
+
+  getUser(){
+    return {...this._user}; // evita mutaciones
+  }
+
 }

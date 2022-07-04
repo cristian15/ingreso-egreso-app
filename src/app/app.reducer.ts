@@ -1,16 +1,17 @@
 import { ActionReducerMap } from '@ngrx/store';
 import * as ui from './shared/ui.redure';
 import * as auth from './auth/auth.reducer';
+import * as ingresoEgreso from './ingreso-egreso/ingreso-egreso.reducer';
 
 
 export interface AppState {
    ui: ui.State,
-   user: auth.State
+   user: auth.State,
+   ingresosEgresos: ingresoEgreso.State
 }
-
-
 
 export const appReducers: ActionReducerMap<AppState> = {
    ui: ui._uiReducer,
-   user: auth._authReducer
+   user: auth._authReducer,
+   ingresosEgresos: ingresoEgreso._ingresoEgresoReducer
 }
