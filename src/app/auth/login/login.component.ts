@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.uiSubscription = this.store.select('ui').subscribe(ui=>{
       this.cargando = ui.isLoading;
-      console.log('Cargando Subs');
     });
   }
 
@@ -43,12 +42,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(){
-
     if(this.loginForm.invalid){return;}
 
-
     this.store.dispatch(ui.isLoading());
-    
     
     const {email, password} = this.loginForm.value;
     this.authService.loginUsuario(email, password)

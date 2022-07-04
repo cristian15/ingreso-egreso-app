@@ -54,7 +54,7 @@ export class AuthService {
       }
       else{
         this._user= null;
-        this.userSubscription.unsubscribe();  // cancela subscripcion para no escuchar cuando sesion este cerrada
+        this.userSubscription?.unsubscribe();  // cancela subscripcion para no escuchar cuando sesion este cerrada
         this.store.dispatch(authActions.unSetUser());
         this.store.dispatch(unSetItems());
       }

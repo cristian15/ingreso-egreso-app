@@ -23,6 +23,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    console.log("HOLA DASH")
+
     this.userSubscription = this.store.select('user')
       .pipe(
         filter(  auth => auth.user != null )
@@ -37,8 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ingresosSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    this.ingresosSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 
 }
